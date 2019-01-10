@@ -10,5 +10,4 @@ action "Docker Registry" {
 
 action "action-build" {
   uses = "actions/docker/cli@master"
-  needs = ["build"]
 }
