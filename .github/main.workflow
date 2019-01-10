@@ -1,6 +1,6 @@
 workflow "New workflow" {
   on = "push"
-  resolves = ["Docker Registry"]
+  resolves = ["action-build", "action-push"]
 }
 
 action "Docker Registry" {
@@ -10,4 +10,10 @@ action "Docker Registry" {
 
 action "action-build" {
   uses = "actions/docker/cli@master"
+  args = "build -t Smolevich/github-actions-demo ."
+}
+
+action "action-push" {
+  uses = "actions/docker/cli@master"
+  args = "tag"
 }
