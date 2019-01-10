@@ -5,14 +5,9 @@ workflow "New workflow" {
   ]
 }
 
-action "Docker Registry" {
-  uses = "actions/docker/login@76ff57a6c3d817840574a98950b0c7bc4e8a13a8"
-  secrets = ["GITHUB_TOKEN"]
-}
-
 action "Build docker image" {
   uses = "actions/docker/cli@master"
-  args = "build -t smolevich/github-actions-demo ."
+  args = ["build", "-t", "github-actions-demo", "."]
 }
 
 action "Push image to Registry" {
