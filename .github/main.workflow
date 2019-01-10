@@ -19,5 +19,5 @@ action "Build docker image" {
 action "Push image to Registry" {
   needs = "Build docker image"
   uses = "actions/docker/cli@master"
-  args = "tag github-actions-demo $GITHUB_SHA"
+  args = "tag smolevich/test-demo $GITHUB_SHA"
 }
