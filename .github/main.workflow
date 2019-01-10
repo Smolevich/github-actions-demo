@@ -1,6 +1,8 @@
 workflow "New workflow" {
   on = "push"
-  resolves = ["action-build", "action-push"]
+  resolves = [
+    "Push image to Registry"
+  ]
 }
 
 action "Docker Registry" {
@@ -8,12 +10,13 @@ action "Docker Registry" {
   secrets = ["GITHUB_TOKEN"]
 }
 
-action "action-build" {
+action "Build docker image" {
   uses = "actions/docker/cli@master"
   args = "ls -alt && build -t smolevich/github-actions-demo ."
 }
 
-action "action-push" {
+action "Push image to Registry" {
+  needs = "Build docker image"
   uses = "actions/docker/cli@master"
-  args = "tag"
+  args = "tag $GITHUB_REF $GITHUB_SHA"
 }
