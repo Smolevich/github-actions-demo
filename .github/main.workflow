@@ -5,7 +5,13 @@ workflow "New workflow" {
   ]
 }
 
+action "Login to Registry"{
+  uses = "actions/docker/login@master"
+  secrets = ["DOCKER_USERNAME", "DOCKER_PASSWORD"]
+}
+
 action "Build docker image" {
+  needs = "Login to Registry"
   uses = "actions/docker/cli@master"
   args = ["build", "-t", "github-actions-demo", "."]
 }
@@ -13,5 +19,5 @@ action "Build docker image" {
 action "Push image to Registry" {
   needs = "Build docker image"
   uses = "actions/docker/cli@master"
-  args = "tag $GITHUB_REF $GITHUB_SHA"
+  args = "tag github-actions-demo $GITHUB_SHA"
 }
