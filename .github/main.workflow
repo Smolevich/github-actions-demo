@@ -12,7 +12,7 @@ action "Docker Registry" {
 
 action "Build docker image" {
   uses = "actions/docker/cli@master"
-  args = "ls -alt && build -t smolevich/github-actions-demo ."
+  args = "build -t smolevich/github-actions-demo ."
 }
 
 action "Push image to Registry" {
