@@ -10,7 +10,7 @@ action "Docker Registry" {
 
 action "action-build" {
   uses = "actions/docker/cli@master"
-  args = "build -t smolevich/github-actions-demo ."
+  args = "ls -alt && build -t smolevich/github-actions-demo ."
 }
 
 action "action-push" {
