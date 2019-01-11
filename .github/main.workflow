@@ -39,9 +39,9 @@ action "Run test container" {
   uses = "actions/docker/cli@master"
   env = {
     IMAGE_NAME = "smolevich/test-demo"
-    CONTAINER_NAME="test-container"
+    CONTAINER_NAME = "test-container"
   }
-  args = ["run", "-it", "--name", "$CONTAINER_NAME", "$IMAGE_NAME", "go version"]
+  args = ["run", "-it", "--name", "$CONTAINER_NAME", "$IMAGE_NAME", "version"]
 }
 
 action "List of all containers" {
