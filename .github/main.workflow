@@ -41,7 +41,7 @@ action "Run test container" {
     IMAGE_NAME = "smolevich/test-demo"
     CONTAINER_NAME = "test-container"
   }
-  args = ["run", "-it", "--name", "$CONTAINER_NAME", "$IMAGE_NAME", "version"]
+  args = ["run", "--name", "$CONTAINER_NAME", "$IMAGE_NAME", "version"]
 }
 
 action "List of all containers" {
