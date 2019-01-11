@@ -37,5 +37,5 @@ action "Push image to Registry" {
 action "aws test" {
   needs = "Push image to Registry"
   uses = "actions/aws/cli@master"
-  args = "lambda --help"
+  args = "lambda help"
 }
