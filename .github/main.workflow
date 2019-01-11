@@ -36,7 +36,7 @@ action "Push image to Registry" {
 
 action "Test go application" {
   needs = "Tag image"
-  uses = "./github/actions/go"
+  uses = "./.github/actions/go"
   runs = "sh -l -c"
   args = ["go version && go get -v ./.github/actions/go/lambda-app && go build"]  
 }
