@@ -34,27 +34,12 @@ action "Push image to Registry" {
   args = ["push", "$IMAGE_NAME"]
 }
 
-action "Run test container" {
-  needs = "Push image to Registry"
-  uses = "actions/docker/cli@master"
-  env = {
-    IMAGE_NAME = "smolevich/test-demo"
-    CONTAINER_NAME = "test-container"
-  }
-  args = ["run", "--name", "$CONTAINER_NAME", "$IMAGE_NAME", "version"]
-}
-
-action "List of all containers" {
-  needs = "Run test container"
-  uses = "actions/docker/cli@master"
-  env = {
-    CONTAINER_NAME="test-container"
-  }
-  args = ["ps", "-a"]   
-}
-
 action "aws test" {
-  needs = "List of all containers"
+  needs = "Push image to Registry"
+  secrets = ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", "AWS_ACCOUNT_ID", "AWS_EXECUTION_ROLE"]
+  env = {
+    AWS_DEFAULT_REGION = "us-east-1"
+  }
   uses = "actions/aws/cli@master"
-  args = "lambda help"
+  args = "lambda create function --region $AWS_DEFAULT_REGION --function-name lambda-handler --memory 128 --role arn:aws:iam::AWS_ACCOUNT_ID:user/$AWS_EXECUTION_ROLE --runtime go1.x --zip-file fileb:///github/home/handler.zip --handler lambda-handler"
 }
