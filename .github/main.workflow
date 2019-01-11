@@ -28,5 +28,8 @@ action "Tag image" {
 action "Push image to Registry" {
   needs = "Tag image"
   uses = "actions/docker/cli@master"
+  env = {
+    IMAGE_NAME = "smolevich/test-demo"
+  }
   args = ["push", "$IMAGE_NAME"]
 }
