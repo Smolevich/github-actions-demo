@@ -1,7 +1,7 @@
 workflow "New workflow" {
   on = "push"
   resolves = [
-    "Push image to Registry"
+    "aws test"
   ]
 }
 
