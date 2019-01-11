@@ -41,5 +41,5 @@ action "aws test" {
     AWS_DEFAULT_REGION = "us-east-1"
   }
   uses = "actions/aws/cli@master"
-  args = "lambda create function --region $AWS_DEFAULT_REGION --function-name lambda-handler --memory 128 --role arn:aws:iam::AWS_ACCOUNT_ID:user/$AWS_EXECUTION_ROLE --runtime go1.x --zip-file fileb:///github/home/handler.zip --handler lambda-handler"
+  args = "lambda create function --region $AWS_DEFAULT_REGION --function-name lambda-handler --memory 128 --role arn:aws:iam::$AWS_ACCOUNT_ID:user/$AWS_EXECUTION_ROLE --runtime go1.x --zip-file fileb:///github/home/handler.zip --handler lambda-handler"
 }
