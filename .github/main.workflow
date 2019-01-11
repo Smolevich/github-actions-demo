@@ -1,7 +1,7 @@
 workflow "New workflow" {
   on = "push"
   resolves = [
-    "aws test"
+    "aws deploy"
   ]
 }
 
@@ -34,7 +34,7 @@ action "Push image to Registry" {
   args = ["push", "$IMAGE_NAME"]
 }
 
-action "aws test" {
+action "aws deploy" {
   needs = "Push image to Registry"
   secrets = ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", "AWS_ACCOUNT_ID", "AWS_EXECUTION_ROLE"]
   env = {
