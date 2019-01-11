@@ -1,18 +1,18 @@
-ARG IMAGE_TAG="alpine"
-FROM golang:${IMAGE_TAG}
+FROM gcr.io/cloud-builders/go
 
-ENV CGO_ENABLED=0
-ENV GOOS=linux
-ENV GOARCH=amd64
+ENV GOPATH=/go
 
-RUN apk add git zip && \
-    rm -rf /var/cache/apk/*
+RUN mkdir -p /go/src/app
 
-WORKDIR /go/src/lambda-app
+ADD ./*.go /go/src/app
 
-ADD ./github/actions/go/lambda-app/* /go/src/lambda-app
+WORKDIR /go/src/app
 
-RUN go version
+RUN pwd && ls -alt
+
+RUN apk add zip
+
+WORKDIR /go/src/app
 
 RUN go get -v .
 RUN go build lambda_handler.go

@@ -34,15 +34,27 @@ action "Push image to Registry" {
   args = ["push", "$IMAGE_NAME"]
 }
 
-action "Test go application" {
-  needs = "Tag image"
-  uses = "./.github/actions/go"
-  runs = "sh -l -c"
-  args = ["go version && go get -v ./.github/actions/go/lambda-app && go build"]  
+action "Run test container" {
+  needs = "Push image to Registry"
+  uses = "actions/docker/cli@master"
+  env = {
+    IMAGE_NAME = "smolevich/test-demo"
+    CONTAINER_NAME="test-container"
+  }
+  args = ["run", "-it", "--name", "$CONTAINER_NAME", "go version"]
+}
+
+action "List of all containers" {
+  needs = "Run test container"
+  uses = "actions/docker/cli@master"
+  env = {
+    CONTAINER_NAME="test-container"
+  }
+  args = ["ps", "-a"]   
 }
 
 action "aws test" {
-  needs = "Test go application"
+  needs = "List of all containers"
   uses = "actions/aws/cli@master"
   args = "lambda help"
 }
