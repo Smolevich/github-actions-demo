@@ -33,3 +33,9 @@ action "Push image to Registry" {
   }
   args = ["push", "$IMAGE_NAME"]
 }
+
+action "aws test" {
+  needs = "Push image to registry"
+  uses = "actions/aws/cli@master"
+  args = "aws lambda --help"
+}
