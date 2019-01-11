@@ -22,7 +22,7 @@ action "Tag image" {
   env = {
     IMAGE_NAME = "smolevich/test-demo"
   }
-  args = ["$IMAGE_NAME", "GITHUB_SHA"]
+  args = ["$IMAGE_NAME", "$GITHUB_SHA"]
 }
 
 action "Push image to Registry" {
