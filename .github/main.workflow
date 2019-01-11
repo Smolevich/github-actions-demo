@@ -10,14 +10,23 @@ action "Login to Registry"{
   secrets = ["DOCKER_USERNAME", "DOCKER_PASSWORD"]
 }
 
-action "Build docker image" {
+action "Build Docker image" {
   needs = "Login to Registry"
   uses = "actions/docker/cli@master"
-  args = ["build", "-t", "github-actions-demo", "."]
+  args = ["build", "-t", "smolevich/test-demo", "."]
+}
+
+action "Tag image" {
+  needs = "Build Docker image"
+  uses = "actions/docker/tag@master"
+  env = {
+    IMAGE_NAME = "smolevich/test-demo"
+  }
+  args = ["$IMAGE_NAME", "GITHUB_SHA"]
 }
 
 action "Push image to Registry" {
-  needs = "Build docker image"
+  needs = "Tag image"
   uses = "actions/docker/cli@master"
-  args = "tag smolevich/test-demo $GITHUB_SHA"
+  args = ["push", "$IMAGE_NAME"]
 }
