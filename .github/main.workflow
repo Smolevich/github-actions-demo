@@ -34,8 +34,15 @@ action "Push image to Registry" {
   args = ["push", "$IMAGE_NAME"]
 }
 
+action "Test go application" {
+  needs = "Tag image"
+  uses = "./github/actions/go"
+  runs = "sh -l -c"
+  args = ["go version && go get -v ./.github/actions/go/lambda-app && go build"]  
+}
+
 action "aws test" {
-  needs = "Push image to Registry"
+  needs = "Test go application"
   uses = "actions/aws/cli@master"
   args = "lambda help"
 }
