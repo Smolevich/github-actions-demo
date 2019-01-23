@@ -6,7 +6,6 @@ ENV CC=/usr/bin/x86_64-alpine-linux-musl-gcc
 
 WORKDIR /go/src/app
 
-RUN ls -alt /github
 ADD ./*.go /go/src/app
 
 RUN pwd && ls -alt

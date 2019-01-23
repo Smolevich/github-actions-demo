@@ -16,8 +16,14 @@ action "Build Docker image" {
   args = ["build", "-t", "smolevich/test-demo", "."]
 }
 
-action "Tag image" {
+action "Save docker imaage" {
   needs = "Build Docker image"
+  uses = "actions/docker/cli@master"
+  args = ["save", "-t", "--output", "go-image.tar", "smolevich/test-demo"]
+}
+
+action "Tag image" {
+  needs = "Save docker imaage"
   uses = "actions/docker/tag@master"
   env = {
     IMAGE_NAME = "smolevich/test-demo"
