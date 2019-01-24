@@ -40,8 +40,14 @@ action "Push image to Registry" {
   args = ["push", "$IMAGE_NAME"]
 }
 
-action "aws deploy" {
+action "Test Shell" {
   needs = "Push image to Registry"
+  uses = "actions/bin/sh@master"
+  args = ["pwd && ls -ltr"]
+}
+
+action "aws deploy" {
+  needs = "Test Shell"
   secrets = ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", "AWS_ACCOUNT_ID", "AWS_EXECUTION_ROLE"]
   env = {
     AWS_DEFAULT_REGION = "us-east-1"
