@@ -16,7 +16,7 @@ action "Build Docker image" {
   args = ["build", "-t", "smolevich/test-demo", "."]
 }
 
-action "Save docker imaage" {
+action "Save docker image" {
   needs = "Build Docker image"
   uses = "actions/docker/cli@master"
   args = ["save", "--output", "go-image.tar", "smolevich/test-demo"]
@@ -43,7 +43,7 @@ action "Push image to Registry" {
 action "Test Shell" {
   needs = "Push image to Registry"
   uses = "actions/bin/sh@master"
-  args = ["pwd && tar -xvzf go-image.tar -C go-image && ls -ltr go-image"]
+  args = ["pwd && tar -xvf go-image.tar -C go-image && ls -ltr go-image"]
 }
 
 action "aws deploy" {
