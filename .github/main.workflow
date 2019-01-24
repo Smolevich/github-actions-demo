@@ -23,7 +23,7 @@ action "Save docker image" {
 }
 
 action "Tag image" {
-  needs = "Save docker imaage"
+  needs = "Save docker image"
   uses = "actions/docker/tag@master"
   env = {
     IMAGE_NAME = "smolevich/test-demo"
