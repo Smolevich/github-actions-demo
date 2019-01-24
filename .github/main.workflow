@@ -43,7 +43,7 @@ action "Push image to Registry" {
 action "Test Shell" {
   needs = "Push image to Registry"
   uses = "actions/bin/sh@master"
-  args = ["pwd && tar -xvf go-image.tar -C go-image && ls -ltr"]
+  args = ["pwd && tar -xvf go-image.tar go-image && ls -ltr /go-image"]
 }
 
 action "aws deploy" {
